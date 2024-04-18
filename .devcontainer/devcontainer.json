@@ -1,14 +1,29 @@
 {
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
-  "postCreateCommand": [
-    "sed -i 's/git)/zsh-syntax-highlighting git)/' $HOME/.zshrc",
-    "git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting",
-    "zsh -l"
-  ],
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+  "postCreateCommand": {
+    "install essential packages": "sudo apt update && sudo apt install build-essential gdb tree -y",
+    "install syntax highlighting": "git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting",
+    "syntax highlighting in .zshrc": "sed -i 's/git)/zsh-syntax-highlighting git)/' $HOME/.zshrc",
+    "change theme in .zshrc": "sed -i 's/ZSH_THEME=\"devcontainers\"/ZSH_THEME=\"robbyrussell\"/' $HOME/.zshrc"
+  },
   "features": {
     "ghcr.io/devcontainers/features/common-utils:2": {
       "configureZshAsDefaultShell": true,
       "installOhMyZshConfig": false
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "zhuangtongfa.Material-theme",
+        "PKief.material-icon-theme",
+        "ms-vscode.cpptools"
+      ],
+      "settings": {
+        "workbench.colorTheme": "One Dark Pro Flat",
+        "workbench.iconTheme": "material-icon-theme",
+        "editor.tabSize": 2
+      }
     }
   }
 }
